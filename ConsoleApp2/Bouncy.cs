@@ -142,7 +142,7 @@ namespace BouncyChar
         }
     }
 
-    class Program
+    class Bouncy
     {
         static void Main()
         {
