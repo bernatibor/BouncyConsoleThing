@@ -1,9 +1,8 @@
 ﻿using System;
-using System.IO;
 
 namespace BouncyChar
 {
-    public class Kurzor
+    public class Ball
     {
         private int x;
         private int y;
@@ -14,9 +13,9 @@ namespace BouncyChar
         private static readonly int topBorder = 0;
         private static readonly int rightBorder = Console.WindowWidth - 1;
         private static readonly int leftBorder = 0;
-        private static readonly string startingDirection = "JOBB_FEL";
+        private static readonly string startingDirection = "RIGHT_UP";
 
-        public Kurzor(int x, int y)
+        public Ball(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -38,17 +37,17 @@ namespace BouncyChar
             {
                 switch (currentDirection)
                 {
-                    case "JOBB_FEL":
-                        JobbFel();
+                    case "RIGHT_UP":
+                        RightAndUp();
                         break;
-                    case "JOBB_LE":
-                        JobbLe();
+                    case "RIGHT_DOWN":
+                        RightAndDown();
                         break;
-                    case "BAL_FEL":
-                        BalFel();
+                    case "LEFT_UP":
+                        LeftAndUp();
                         break;
-                    case "BAL_LE":
-                        BalLe();
+                    case "LEFT_DOWN":
+                        LeftAndDown();
                         break;
                 }
 
@@ -56,14 +55,14 @@ namespace BouncyChar
             }
         }
 
-        public void JobbFel()
+        public void RightAndUp()
         {
             if (RightBorderHit())
             {
-                currentDirection = "BAL_FEL";
+                currentDirection = "LEFT_UP";
             } else if (TopBorderHit())
             {
-                currentDirection = "JOBB_LE";
+                currentDirection = "RIGHT_DOWN";
             } else
             {
                 x += 1;
@@ -71,15 +70,15 @@ namespace BouncyChar
             }
         }
 
-        public void JobbLe()
+        public void RightAndDown()
         {
             if (RightBorderHit())
             {
-                currentDirection = "BAL_LE";
+                currentDirection = "LEFT_DOWN";
             }
             else if (BottomBorderHit())
             {
-                currentDirection = "JOBB_FEL";
+                currentDirection = "RIGHT_UP";
             }
             else
             {
@@ -88,15 +87,15 @@ namespace BouncyChar
             }
         }
 
-        public void BalFel()
+        public void LeftAndUp()
         {
             if (LeftBorderHit())
             {
-                currentDirection = "JOBB_FEL";
+                currentDirection = "RIGHT_UP";
             }
             else if (TopBorderHit())
             {
-                currentDirection = "BAL_LE";
+                currentDirection = "LEFT_DOWN";
             }
             else
             {
@@ -105,15 +104,15 @@ namespace BouncyChar
             }
         }
 
-        public void BalLe()
+        public void LeftAndDown()
         {
             if (LeftBorderHit())
             {
-                currentDirection = "JOBB_LE";
+                currentDirection = "RIGHT_DOWN";
             }
             else if (BottomBorderHit())
             {
-                currentDirection = "BAL_FEL";
+                currentDirection = "LEFT_UP";
             }
             else
             {
@@ -142,19 +141,19 @@ namespace BouncyChar
             return (x - 1) < leftBorder;
         }
     }
+
     class Program
     {
-
-        static void Main(string[] args)
+        static void Main()
         {
-            int x = Console.WindowWidth / 2;
-            int y = Console.WindowHeight / 2;
+            int startingX = Console.WindowWidth / 2;
+            int startingY = Console.WindowHeight / 2;
 
             Console.CursorVisible = false;
 
-            Kurzor c = new Kurzor(x, y);
+            Ball bouncyBall = new Ball(startingX, startingY);
 
-            c.Run();
+            bouncyBall.Run();
         }
     }
 }
